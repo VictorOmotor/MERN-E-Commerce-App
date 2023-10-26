@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import Header from './components/Header/Header'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Header from './components/Header/Header';
 // import Home from './pages/Home'
 // import SignIn from './pages/SignIn'
 // import SignUp from './pages/SignUp'
@@ -34,7 +34,7 @@ const App = () => {
         </Route> */}
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;
