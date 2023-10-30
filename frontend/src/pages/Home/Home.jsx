@@ -7,6 +7,7 @@ import { productData } from '../../components/Carousel/data';
 import CarouselItem from '../../components/Carousel/CarouselItem';
 import ProductCarousel from '../../components/Carousel/Carousel';
 import ProductCategory from './ProductCategory';
+import FooterLinks from '../../components/Footer/FooterLinks';
 
 const Home = () => {
   const productss = productData.map((item) => (
@@ -41,6 +42,7 @@ const Home = () => {
           <ProductCarousel products={productss} />
         </div>
       </section>
+      <FooterLinks />
     </>
   );
 };
