@@ -13,7 +13,7 @@ export const createUserValidator = Joi.object({
   .messages({
     'string.pattern.base': 'Password must contain at least one number and at least 6 characters long',
   }),
-  confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({ 'any.only': `Password does not match` }),
   
 }).strict()
 
