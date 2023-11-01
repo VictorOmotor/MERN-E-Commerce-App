@@ -27,6 +27,6 @@ export const updateUserValidator = Joi.object({
   photo: Joi.string().optional().messages({
     'string.pattern.base': 'Please add a photo',
   }),
-  phone: Joi.string().regex(/^[0-9]{10}$/).messages({ 'string.pattern.base': `Phone number must have 10 digits.` }).optional(),
+  phone: Joi.string().regex(/^[0-9]{11}$/).messages({ 'string.pattern.base': `Phone number must have 11 digits.` }).optional(),
   address: Joi.string().optional()
 }).strict()

@@ -1,24 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './auth.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../../assets/login.png'
 import Card from '../../components/Card/Card'
+import { toast } from 'react-toastify'
+import { validateEmail } from '../../utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { register, resetAuth } from '../../redux/features/auth/authSlice'
+import Loader from '../../components/Loader/Loader'
 
 const Register = () => {
   const [formData, setFormData] = useState({})
-
+  const dispatch = useDispatch()
+  const { loading, success, loggedIn } = useSelector((state) => state.auth)
+  const navigate = useNavigate()
   const handleChange = async (e) => {
+    const {id, value} = e.target
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value,
+      [id]: value
     })
   }
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let hasNumber = /\d/.test(formData.password)
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      return toast.error('All fields are required!')
+    }
+    if (formData.password.length < 6 || !hasNumber) {
+      return toast.error('Password must be at least 6 characters long and must contain at least one number')
+    }
+    if (!validateEmail(formData.email)) {
+      return toast.error('Please enter a valid email')
+    }
+    if (formData.password !== formData.confirmPassword) {
+      return toast.error('Passwords do not match!')
+    }
+    await dispatch(register(formData))
   }
   
+  useEffect(() => {
+    if (success && loggedIn) {
+      navigate('/')
+    }
+    dispatch(resetAuth())
+  }, [success, loggedIn, dispatch, navigate])
   return (
+    <>
+      {loading && <Loader />}
     <section className={`container ${styles.auth}`}>
       <Card>
         <div className={styles.form}>
@@ -50,7 +80,7 @@ const Register = () => {
         />
           <button type='submit' className='--btn --btn-primary
           --btn-block'>
-            Login
+            Register
           </button>
           </form>
           <span className={styles.register}>
@@ -65,6 +95,7 @@ const Register = () => {
       <img src={loginImg} alt="Login" width={400} />
       </div>
     </section>
+    </>
   )
 }
 
