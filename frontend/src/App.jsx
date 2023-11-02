@@ -4,9 +4,9 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-import axios from 'axios'
+import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 // import Home from './pages/Home'
 // import SignIn from './pages/SignIn'
 // import SignUp from './pages/SignUp'
