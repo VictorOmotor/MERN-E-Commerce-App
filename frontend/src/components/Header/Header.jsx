@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './Header.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
+import { logout, resetAuth } from '../../redux/features/auth/authSlice';
 
 export const logo = (
   <div className={styles.logo}>
@@ -19,6 +21,8 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : '');
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setScrollPage] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fixNavBar = () => {
     if (window.scrollY > 50) {
@@ -44,6 +48,12 @@ const Header = () => {
       </Link>
     </span>
   );
+
+  const handleLogout = async (e) => {
+    await dispatch(logout());
+    await dispatch(resetAuth());
+    navigate('/login');
+  };
   return (
     <header className={scrollPage ? `${styles.fixed}` : ''}>
       <div className={styles.header}>
@@ -83,6 +93,9 @@ const Header = () => {
               </NavLink>
               <NavLink to={'order-history'} className={activeLink}>
                 My Order
+              </NavLink>
+              <NavLink to={'/'} onClick={handleLogout}>
+                Logout
               </NavLink>
             </span>
             {cart}

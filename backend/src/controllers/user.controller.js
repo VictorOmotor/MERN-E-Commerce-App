@@ -78,10 +78,10 @@ export default class UserController {
   }
 
   static async logout(req, res) {
-    const userId = req.params.id
-    const user = await User.findById(userId)
-    user.accessToken = null
-    await user.save()
+    // const userId = req.user._id
+    // const user = await User.findById(userId)
+    // user.accessToken = null
+    // await user.save()
     res.cookie('access_token', '', {
       httpOnly: true,
       // secure: true,

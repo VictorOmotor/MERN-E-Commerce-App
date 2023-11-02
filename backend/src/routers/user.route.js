@@ -8,7 +8,7 @@ const router = Router()
 router.post('/register', tryCatchHandler(UserController.registerUser))
 router.post('/login', tryCatchHandler(UserController.loginUser))
 router.get(
-  '/logout/:id',
+  '/logout',
   tryCatchHandler(UserController.logout),
 )
 router.get('/:id', userAuthMiddleWare, tryCatchHandler(UserController.getUser))

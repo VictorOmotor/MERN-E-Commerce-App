@@ -12,13 +12,18 @@ const register = async (formData) => {
   return response.data;
 };
 const login = async (formData) => {
-  const response = await axios.post(`${API_URL}login`, formData, {});
+  const response = await axios.post(`${API_URL}login`, formData);
   return response.data;
+};
+const logout = async () => {
+  const response = await axios.get(`${API_URL}logout`);
+  return response.data.message;
 };
 
 const authService = {
   register,
   login,
+  logout,
 };
 
 export default authService;
