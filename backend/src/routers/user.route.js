@@ -11,11 +11,12 @@ router.get(
   '/logout',
   tryCatchHandler(UserController.logout),
 )
-router.get('/:id', userAuthMiddleWare, tryCatchHandler(UserController.getUser))
 router.get('/loginstatus', tryCatchHandler(UserController.getLoginStatus))
 
+router.get('/', userAuthMiddleWare, tryCatchHandler(UserController.getUser))
+
 router.put(
-  '/profile/:id',
+  '/profile',
   userAuthMiddleWare,
   tryCatchHandler(UserController.updateUserInfo),
 )

@@ -44,7 +44,7 @@ export default class UserController {
     })
     res.status(201).json({
       status: 'Success',
-      message: 'User created successfully.',
+      message: 'Registration successful.',
       userData,
     })
   }
@@ -96,9 +96,9 @@ export default class UserController {
 
   static async getUser(req, res) {
     const userId = req.user._id;
-    const id = req.params.id
-    if (userId !== id) throw new UnAuthorizedError('Unauthorized!')
-    const user = await User.findById(id).select('-password')
+    // const id = req.params.id
+    // if (userId !== id) throw new UnAuthorizedError('Unauthorized!')
+    const user = await User.findById(userId).select('-password')
     if (!user) throw new NotFoundError('User not found')
     res.status(200).json({
       status: 'Success',
@@ -109,50 +109,51 @@ export default class UserController {
   static async getLoginStatus(req, res) {
     const token = req.cookies.access_token
     const verified = verifyToken(token)
-    if (!verified) {
+    if (verified) {
       res.json(true)
-    } 
-    res.json(false)
+    } else {
+      res.json(false)
+    }
+    
   }
 
   static async updateUserInfo(req, res) {
     const userId = req.user._id
     if (!userId) throw new UnAuthorizedError('Not authorized')
-    if (userId !== req.params.id)
-      throw new UnAuthorizedError('You can only change your own')
+    // if (userId !== req.params.id)
+    //   throw new UnAuthorizedError('You can only change your own')
     const { error } = updateUserValidator.validate(req.body)
     if (error) throw error
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+      userId,
       {
         $set: {
           address: req.body.address,
           name: req.body.name,
-          photo: req.body.photo,
           phone: req.body.phone
         },
       },
       { new: true },
     )
-    const { password, ...userData } = updatedUser._doc
+    const { password, ...user } = updatedUser._doc
     res.status(200).json({
       status: 'Success',
-      message: 'User information updated successfully',
-      userData,
+      message: 'Profile updated successfully',
+      user,
     })
   }
 
   static async updateUserPhoto(req, res) {
     const { photo } = req.body
     const id = req.user._id;
-    const user = await User.findById(id)
-    user.photo = photo
-    await user.save()
-    const { password, ...userData } = updatedUser._doc
+    const validUser = await User.findById(id)
+    validUser.photo = photo
+    await validUser.save()
+    const { password, ...user } = validUser._doc
     res.status(200).json({
       status: 'Success',
-      message: 'User information updated successfully',
-      userData,
+      message: 'Profile photo updated successfully',
+      user,
     })
   }
 

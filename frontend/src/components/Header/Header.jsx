@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styles from './Header.module.scss';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaTimes, FaUserCircle } from 'react-icons/fa';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import { logout, resetAuth } from '../../redux/features/auth/authSlice';
 import ShowOnLogin, { ShowOnLogout } from '../HiddenLink/HiddenLink';
+import { UserName } from '../../pages/Profile/Profile';
 
 export const logo = (
   <div className={styles.logo}>
@@ -97,6 +98,12 @@ const Header = () => {
                 </NavLink>
               </ShowOnLogout>
               <ShowOnLogin>
+              <NavLink to={'profile'} className={activeLink}>
+               <FaUserCircle size={16} color='#ff7722' />
+               <UserName />
+                </NavLink>
+              </ShowOnLogin>
+              <ShowOnLogin>
               <NavLink to={'order-history'} className={activeLink}>
                 My Order
                 </NavLink>
@@ -105,7 +112,7 @@ const Header = () => {
               <NavLink to={'/'} onClick={handleLogout}>
                 Logout
                 </NavLink>
-                </ShowOnLogin>
+              </ShowOnLogin>
             </span>
             {cart}
           </div>

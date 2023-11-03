@@ -2,8 +2,8 @@ import User from '../models/user.model.js'
 import { verifyToken } from '../utils/jwt.utils.js'
 
 export async function userAuthMiddleWare(req, res, next) {
-  const token = req.headers?.authorization?.split(' ')[1]
-  // const token = req.cookies.access_token
+  // const token = req.headers?.authorization?.split(' ')[1]
+  const token = req.cookies.access_token
   if (!token) {
     return res
       .status(401)
@@ -11,11 +11,11 @@ export async function userAuthMiddleWare(req, res, next) {
   }
 
   try {
-    const user = await User.findOne({ accessToken: token })
+    // const user = await User.findOne({ accessToken: token })
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
+    // if (!user) {
+    //   return res.status(404).json({ message: 'User not found' })
+    // }
 
     const payload = verifyToken(token)
     req.user = payload

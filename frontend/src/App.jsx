@@ -7,6 +7,10 @@ import Register from './pages/Auth/Register';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getLoginStatus } from './redux/features/auth/authSlice';
+import Profile from './pages/Profile/Profile';
 // import Home from './pages/Home'
 // import SignIn from './pages/SignIn'
 // import SignUp from './pages/SignUp'
@@ -20,7 +24,12 @@ import 'react-toastify/dist/ReactToastify.css';
 // import Search from './pages/Search'
 
 const App = () => {
-  // axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLoginStatus())
+  }, [dispatch])
   return (
     <BrowserRouter>
       <ToastContainer />
@@ -29,6 +38,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
         {/* <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />} />
         <Route path="/listing/:listingId" element={<Listing />} />
