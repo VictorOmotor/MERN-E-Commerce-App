@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import { router as userRouter } from './src/routers/user.route.js'
+import { router as productRouter } from './src/routers/product.route.js'
 import { globalErrorHandler } from './src/utils/errorHandler.js'
 import { config } from './src/config/index.js'
 import cookieParser from 'cookie-parser'
@@ -33,6 +34,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use('/api/user', userRouter)
+app.use('/api/products', productRouter)
 
 app.use(express.static(path.join(__dirname, '/frontend/dist')))
 
