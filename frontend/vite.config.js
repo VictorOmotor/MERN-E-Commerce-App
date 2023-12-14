@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://ecommerceapp-pon9.onrender.com',
         secure: false,
       },
     },
