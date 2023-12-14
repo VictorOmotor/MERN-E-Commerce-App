@@ -6,7 +6,8 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start-dev": "set NODE_ENV=development && nodemon app.js",
-    "start-prod": "set NODE_ENV=production && nodemon app.js"
+    "start-prod": "set NODE_ENV=production && nodemon app.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "type": "module",
